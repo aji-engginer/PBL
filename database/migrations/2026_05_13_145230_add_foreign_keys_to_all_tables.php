@@ -26,17 +26,12 @@ return new class extends Migration
 
         // data_user - foreign keys already defined in create_data_user_table migration
 
-        // program
-        Schema::table('program', function (Blueprint $table) {
-            $table->foreign('jenis_pengajuan_id')->references('jenis_pengajuan_id')->on('jenis_pengajuan')->cascadeOnDelete();
-        });
 
         // pengajuan
         Schema::table('pengajuan', function (Blueprint $table) {
             $table->foreign('operator_id')->references('admin_id')->on('admin')->nullOnDelete();
             $table->foreign('user_id')->references('user_id')->on('data_user')->cascadeOnDelete();
             $table->foreign('admin_id')->references('admin_id')->on('admin')->nullOnDelete();
-            $table->foreign('jenis_pengajuan_id')->references('jenis_pengajuan_id')->on('jenis_pengajuan')->cascadeOnDelete();
             $table->foreign('program_id')->references('program_id')->on('program')->cascadeOnDelete();
         });
     }
@@ -44,13 +39,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pengajuan', function (Blueprint $table) {
-            $table->dropForeign(['operator_id', 'user_id', 'admin_id', 'jenis_pengajuan_id', 'program_id']);
-        });
-        Schema::table('data_user', function (Blueprint $table) {
-            $table->dropForeign(['jenis_user_id']);
-        });
-        Schema::table('program', function (Blueprint $table) {
-            $table->dropForeign(['jenis_pengajuan_id']);
+            $table->dropForeign(['operator_id', 'user_id', 'admin_id', 'program_id']);
         });
         Schema::table('admin', function (Blueprint $table) {
             $table->dropForeign(['kecamatan_id']);

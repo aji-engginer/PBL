@@ -16,10 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('operator_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->unsignedBigInteger('jenis_pengajuan_id');
             $table->unsignedBigInteger('program_id');
-            $table->enum('status_pengajuan', ['menunggu', 'diproses', 'disetujui', 'ditolak'])->default('menunggu');
+            $table->enum('status_pengajuan', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->date('tanggal_pengajuan')->nullable();
+            $table->date('tanggal_validasi')->nullable();
             $table->text('catatan_pengajuan')->nullable();
             $table->timestamps();
         });

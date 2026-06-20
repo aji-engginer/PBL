@@ -19,76 +19,76 @@ class ProgramSeeder extends Seeder
         $data = [
             // ── Tahun 2025 ───────────────────────────────────────────────
             [
-                
-                'tahun'              => 2025,
-                'status'             => 'active',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Kesejahteraan Masyarakat',
+                'tahun'        => 2025,
+                'status'       => 'active',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
             [
-                
-                'tahun'              => 2025,
-                'status'             => 'active',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Pemberdayaan Ekonomi',
+                'tahun'        => 2025,
+                'status'       => 'active',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
             [
-                
-                'tahun'              => 2025,
-                'status'             => 'active',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Infrastruktur Desa',
+                'tahun'        => 2025,
+                'status'       => 'active',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
             [
-               
-                'tahun'              => 2025,
-                'status'             => 'inactive',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Pendidikan dan Pelatihan',
+                'tahun'        => 2025,
+                'status'       => 'inactive',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
             [
-               
-                'tahun'              => 2025,
-                'status'             => 'active',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Kesehatan Masyarakat',
+                'tahun'        => 2025,
+                'status'       => 'active',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
 
             // ── Tahun 2026 ───────────────────────────────────────────────
             [
-               
-                'tahun'              => 2026,
-                'status'             => 'active',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Kesejahteraan Masyarakat',
+                'tahun'        => 2026,
+                'status'       => 'active',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
             [
-               
-                'tahun'              => 2026,
-                'status'             => 'active',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Pemberdayaan Ekonomi',
+                'tahun'        => 2026,
+                'status'       => 'active',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
             [
-               
-                'tahun'              => 2026,
-                'status'             => 'active',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Infrastruktur Desa',
+                'tahun'        => 2026,
+                'status'       => 'active',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
             [
-               
-                'tahun'              => 2026,
-                'status'             => 'active',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Pendidikan dan Pelatihan',
+                'tahun'        => 2026,
+                'status'       => 'active',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
             [
-                
-                'tahun'              => 2026,
-                'status'             => 'active',
-                'created_at'         => $now,
-                'updated_at'         => $now,
+                'nama_program' => 'Program Kesehatan Masyarakat',
+                'tahun'        => 2026,
+                'status'       => 'active',
+                'created_at'   => $now,
+                'updated_at'   => $now,
             ],
         ];
 

@@ -10,7 +10,10 @@ class PondokController extends Controller
 {
     public function index()
     {
-        return response()->json(Pondok::all(), 200);
+
+        $pondok = Pondok::with('desa.kecamatan')->get();
+        return response()->json($pondok, 200);
+
     }
 
     public function store(Request $request)

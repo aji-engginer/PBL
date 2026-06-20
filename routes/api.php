@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\DataUserController;
 use App\Http\Controllers\Api\DesaController;
 use App\Http\Controllers\Api\KecamatanController;
+use App\Http\Controllers\Api\PengajuanController;
 use App\Http\Controllers\Api\PondokController;
 use App\Http\Controllers\Api\ProgramController;
-use App\Http\Controllers\Api\PengajuanController; // 1. IMPORT CONTROLLER BARU
 use Illuminate\Support\Facades\Route;
 
 // ================================================
@@ -15,28 +16,32 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Kecamatan publik (data referensi wilayah)
 Route::apiResource('kecamatan', KecamatanController::class);
-
-// Program publik (data referensi anggaran tahunan)
 Route::apiResource('program', ProgramController::class);
 
-
 // ================================================
-// Route Terproteksi (Harus Login Sanctum)
+// Route Terproteksi — Semua Role (Admin & Super Admin)
 // ================================================
 Route::middleware('auth:sanctum')->group(function () {
 
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    // Master data wilayah
     Route::apiResource('desa', DesaController::class);
     Route::apiResource('pondok', PondokController::class);
     Route::apiResource('data-user', DataUserController::class);
 
-    // 2. RUTE MODUL PENGAJUAN (Hanya untuk User yang Login)
-    // Menggunakan .only() karena update data dilarang/diganti lewat mekanisme Validasi
-    Route::apiResource('pengajuan', PengajuanController::class)->only(['index', 'store', 'show']);
-    
-    // 3. RUTE KHUSUS VALIDASI SUPER ADMIN (Menggunakan PATCH untuk mengubah sebagian data status)
-    Route::patch('pengajuan/{id}/validate', [PengajuanController::class, 'validateSubmission']);
+    // Pengajuan — role check dilakukan di dalam controller
+    Route::apiResource('pengajuan', PengajuanController::class);
+    Route::patch('pengajuan/{id}/validasi', [PengajuanController::class, 'validate']);
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    // ================================================
+    // Route Khusus Super Admin
+    // ================================================
+    Route::middleware('role.superadmin')->group(function () {
+
+        // Manajemen Admin Kecamatan
+        Route::apiResource('admin', AdminController::class);
+        Route::patch('admin/{id}/reset-password', [AdminController::class, 'resetPassword']);
+    });
 });

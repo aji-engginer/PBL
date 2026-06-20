@@ -6,17 +6,14 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $this->call([
-            JenisUserSeeder::class,
-            KecamatanSeeder::class,
-            DesaSeeder::class,
-            PondokSeeder::class,
-            programSeeder::class,
+            KecamatanSeeder::class, // harus pertama, admin & desa butuh kecamatan_id
+            DesaSeeder::class,      // harus setelah kecamatan
+            PondokSeeder::class,    // harus setelah desa
+            AdminSeeder::class,     // harus setelah kecamatan
+            ProgramSeeder::class,   // bebas, tidak ada dependensi
         ]);
     }
 }

@@ -12,7 +12,7 @@ class DataUserController extends Controller
     // GET /api/data-user
     public function index()
     {
-        $users = DataUser::with(['pondok', 'jenisUser'])->get();
+        $users = DataUser::with('pondok')->get();
         return response()->json($users, 200);
     }
 
@@ -21,7 +21,6 @@ class DataUserController extends Controller
     {
         $request->validate([
             'pondok_id'       => 'nullable|exists:pondok,pondok_id',
-            'jenis_user_id'   => 'nullable|exists:jenis_user,jenis_user_id',
             'nama_lengkap'    => 'required|string|max:255',
             'nik'             => 'required|string|size:16|unique:data_user,nik',
             'tempat_lahir'    => 'required|string|max:255',
@@ -36,7 +35,7 @@ class DataUserController extends Controller
         ]);
 
         $data = $request->only([
-            'pondok_id', 'jenis_user_id', 'nama_lengkap', 'nik',
+            'pondok_id', 'nama_lengkap', 'nik',
             'tempat_lahir', 'alamat', 'nomor_rekening'
         ]);
 
@@ -60,7 +59,7 @@ class DataUserController extends Controller
     // GET /api/data-user/{id}
     public function show($id)
     {
-        $user = DataUser::with(['pondok', 'jenisUser'])->find($id);
+        $user = DataUser::with('pondok')->find($id);
 
         if (!$user) {
             return response()->json(['message' => 'Data tidak ditemukan'], 404);
@@ -80,7 +79,6 @@ class DataUserController extends Controller
 
         $request->validate([
             'pondok_id'       => 'nullable|exists:pondok,pondok_id',
-            'jenis_user_id'   => 'nullable|exists:jenis_user,jenis_user_id',
             'nama_lengkap'    => 'required|string|max:255',
             'nik'             => 'required|string|size:16|unique:data_user,nik,' . $user->user_id . ',user_id',
             'tempat_lahir'    => 'required|string|max:255',
@@ -95,7 +93,7 @@ class DataUserController extends Controller
         ]);
 
         $data = $request->only([
-            'pondok_id', 'jenis_user_id', 'nama_lengkap', 'nik',
+            'pondok_id', 'nama_lengkap', 'nik',
             'tempat_lahir', 'alamat', 'nomor_rekening'
         ]);
 
