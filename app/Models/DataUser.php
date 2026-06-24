@@ -23,9 +23,11 @@ class DataUser extends Model
         'surat_keterangan_guru_mengaji',
         'surat_keterangan_kecamatan',
         'nomor_rekening',
+        'bank',
+        'kategori',
     ];
 
-    // Field tambahan yang otomatis ikut di response JSON (bukan kolom database)
+    // Field URL file — otomatis ikut di response JSON
     protected $appends = [
         'foto_ktp_url',
         'foto_kk_url',
@@ -45,7 +47,7 @@ class DataUser extends Model
         return $this->hasMany(Pengajuan::class, 'user_id');
     }
 
-    // ── Accessor URL File ──────────────────────────────────────────
+    // ── Accessor URL File ──────────────────────────────────────
 
     public function getFotoKtpUrlAttribute()
     {

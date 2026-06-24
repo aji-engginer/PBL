@@ -12,7 +12,7 @@ class DataUserController extends Controller
     // GET /api/data-user
     public function index()
     {
-        $users = DataUser::with('pondok')->get();
+        $users = DataUser::with('pondok.kecamatan', 'pondok.desa')->get();
         return response()->json($users, 200);
     }
 
@@ -26,6 +26,8 @@ class DataUserController extends Controller
             'tempat_lahir'    => 'required|string|max:255',
             'alamat'          => 'required|string',
             'nomor_rekening'  => 'required|string|max:255',
+            'bank'            => 'nullable|string|max:255',
+            'kategori'        => 'nullable|in:Guru Mengaji,Pimpinan Pondok',
             'foto_ktp'        => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'foto_kk'         => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'surat_putusan'                       => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
@@ -36,14 +38,15 @@ class DataUserController extends Controller
 
         $data = $request->only([
             'pondok_id', 'nama_lengkap', 'nik',
-            'tempat_lahir', 'alamat', 'nomor_rekening'
+            'tempat_lahir', 'alamat', 'nomor_rekening',
+            'bank', 'kategori',
         ]);
 
         $fileFields = [
             'foto_ktp', 'foto_kk', 'surat_putusan',
             'surat_keterangan_pimpinan_pondok',
             'surat_keterangan_guru_mengaji',
-            'surat_keterangan_kecamatan'
+            'surat_keterangan_kecamatan',
         ];
 
         foreach ($fileFields as $field) {
@@ -53,13 +56,16 @@ class DataUserController extends Controller
         }
 
         $user = DataUser::create($data);
-        return response()->json(['message' => 'Data user berhasil ditambahkan', 'data' => $user], 201);
+        return response()->json([
+            'message' => 'Data user berhasil ditambahkan',
+            'data'    => $user->load('pondok.kecamatan', 'pondok.desa')
+        ], 201);
     }
 
     // GET /api/data-user/{id}
     public function show($id)
     {
-        $user = DataUser::with('pondok')->find($id);
+        $user = DataUser::with('pondok.kecamatan', 'pondok.desa')->find($id);
 
         if (!$user) {
             return response()->json(['message' => 'Data tidak ditemukan'], 404);
@@ -84,6 +90,8 @@ class DataUserController extends Controller
             'tempat_lahir'    => 'required|string|max:255',
             'alamat'          => 'required|string',
             'nomor_rekening'  => 'required|string|max:255',
+            'bank'            => 'nullable|string|max:255',
+            'kategori'        => 'nullable|in:Guru Mengaji,Pimpinan Pondok',
             'foto_ktp'        => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'foto_kk'         => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'surat_putusan'                       => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
@@ -94,14 +102,15 @@ class DataUserController extends Controller
 
         $data = $request->only([
             'pondok_id', 'nama_lengkap', 'nik',
-            'tempat_lahir', 'alamat', 'nomor_rekening'
+            'tempat_lahir', 'alamat', 'nomor_rekening',
+            'bank', 'kategori',
         ]);
 
         $fileFields = [
             'foto_ktp', 'foto_kk', 'surat_putusan',
             'surat_keterangan_pimpinan_pondok',
             'surat_keterangan_guru_mengaji',
-            'surat_keterangan_kecamatan'
+            'surat_keterangan_kecamatan',
         ];
 
         foreach ($fileFields as $field) {
@@ -114,7 +123,10 @@ class DataUserController extends Controller
         }
 
         $user->update($data);
-        return response()->json(['message' => 'Data user berhasil diperbarui', 'data' => $user], 200);
+        return response()->json([
+            'message' => 'Data user berhasil diperbarui',
+            'data'    => $user->load('pondok.kecamatan', 'pondok.desa')
+        ], 200);
     }
 
     // DELETE /api/data-user/{id}
@@ -130,7 +142,7 @@ class DataUserController extends Controller
             'foto_ktp', 'foto_kk', 'surat_putusan',
             'surat_keterangan_pimpinan_pondok',
             'surat_keterangan_guru_mengaji',
-            'surat_keterangan_kecamatan'
+            'surat_keterangan_kecamatan',
         ];
 
         foreach ($fileFields as $field) {
